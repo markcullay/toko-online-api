@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masuk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+<main class="card">
+  <h1>Masuk ke akun Anda</h1>
+  <p class="sub">Masukkan email dan kata sandi untuk melanjutkan.</p>
+
+  <form id="login" novalidate>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" placeholder="nama@contoh.com" aria-describedby="email-err">
+      <p class="err" id="email-err" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="password">Kata sandi</label>
+      <div class="input-wrap pw">
+        <input id="password" type="password" autocomplete="current-password" placeholder="Minimal 8 karakter" aria-describedby="pw-err">
+        <button type="button" class="toggle" id="toggle" aria-label="Tampilkan kata sandi">Lihat</button>
+      </div>
+      <p class="err" id="pw-err" role="alert"></p>
+    </div>
+
+    <div class="row">
+      <label class="check"><input type="checkbox" id="remember"> Ingat saya</label>
+      <a href="#" id="forgot">Lupa kata sandi?</a>
+    </div>
+
+    <button class="submit" type="submit" id="submit">Masuk</button>
+    <p class="status" id="status" aria-live="polite"></p>
+  </form>
+
+  <p class="foot">Belum punya akun? <a href="register.html" id="signup">Daftar</a></p>
+</main>
+
+<script src="login.js"></script>
+</body>
+</html>

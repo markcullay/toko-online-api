@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard Admin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="..\style\homepage_admin.css">
+</head>
+<body>
+<header class="top">
+  <h1>Dashboard Admin</h1>
+  <a href="..\login_register\login.html" class="logout">Keluar</a>
+</header>
+
+<main class="wrap">
+  <section class="stats" aria-label="Ringkasan">
+    <div class="stat"><span>Total produk</span><strong id="st-products">0</strong></div>
+    <div class="stat"><span>Total pengguna</span><strong id="st-users">0</strong></div>
+    <div class="stat"><span>Produk terjual</span><strong id="st-sold">0</strong></div>
+    <div class="stat"><span>Pendapatan</span><strong id="st-revenue">Rp0</strong></div>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="Menu admin">
+    <button role="tab" id="tab-products" aria-controls="panel-products" aria-selected="true">Produk</button>
+    <button role="tab" id="tab-categories" aria-controls="panel-categories" aria-selected="false">Kategori</button>
+    <button role="tab" id="tab-admins" aria-controls="panel-admins" aria-selected="false">Pengelola</button>
+    <button role="tab" id="tab-users" aria-controls="panel-users" aria-selected="false">Pengguna</button>
+    <button role="tab" id="tab-sales" aria-controls="panel-sales" aria-selected="false">Penjualan</button>
+  </nav>
+
+    <!-- 1. Tambah & daftar produk -->
+  <section class="panel" id="panel-products" role="tabpanel" aria-labelledby="tab-products">
+    <div class="card">
+      <h2>Tambah produk</h2>
+      <form id="product-form" novalidate>
+        <div class="grid">
+          <div class="field">
+            <label for="p-category">Kategori</label>
+            <select id="p-category" required>
+              <option value="">Pilih Kategori</option>
+              <!-- Akan diisi oleh JS -->
+            </select>
+          </div>
+          <div class="field">
+            <label for="p-name">Nama produk</label>
+            <input id="p-name" type="text" placeholder="Contoh: Kemeja Batik">
+          </div>
+          <div class="field">
+            <label for="p-price">Harga (Rp)</label>
+            <input id="p-price" type="number" min="0" step="100" placeholder="150000">
+          </div>
+          <div class="field">
+            <label for="p-stock">Stok</label>
+            <input id="p-stock" type="number" min="0" step="1" placeholder="20">
+          </div>
+        </div>
+        <div class="field">
+          <label for="p-desc">Deskripsi (opsional)</label>
+          <input id="p-desc" type="text" placeholder="Keterangan singkat produk">
+        </div>
+        <p class="err" id="p-err" role="alert"></p>
+        <button class="btn" type="submit">Tambah produk</button>
+        <p class="ok" id="p-ok" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h2 style="margin: 0;">Daftar produk</h2>
+        <!-- Kolom Pencarian -->
+        <input type="search" id="search-product" placeholder="Cari produk..." style="width: 250px; height: 36px;">
+      </div>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Nama</th>
+              <th class="num">Harga</th>
+              <th class="num">Stok</th>
+              <th class="aksi">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="products-body"></tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div id="pagination-products" style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 14px;">
+        <button type="button" class="btn-mini" id="btn-prev" disabled>Sebelumnya</button>
+        <span id="page-info" style="font-size: 0.9rem;">Halaman 1</span>
+        <button type="button" class="btn-mini" id="btn-next" disabled>Selanjutnya</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- PANEL KATEGORI BARU -->
+  <section class="panel" id="panel-categories" role="tabpanel" aria-labelledby="tab-categories" hidden>
+    <div class="card">
+      <h2>Tambah kategori</h2>
+      <form id="category-form" novalidate style="display: flex; gap: 10px; align-items: flex-end;">
+        <div class="field" style="flex: 1; margin-bottom: 0;">
+          <label for="c-name">Nama kategori</label>
+          <input id="c-name" type="text" placeholder="Contoh: Pakaian Pria">
+        </div>
+        <button class="btn" type="submit" style="height: 44px;">Tambah</button>
+      </form>
+      <p class="err" id="c-err" role="alert" style="margin-top: 10px;"></p>
+    </div>
+    
+    <div class="card">
+      <h2>Daftar kategori</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Nama Kategori</th><th class="aksi">Aksi</th></tr></thead>
+          <tbody id="categories-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Daftar Admin -->
+  <section class="panel" id="panel-admins" role="tabpanel" aria-labelledby="tab-admins" hidden>
+    <div class="card">
+      <h2>Daftar admin</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Nama</th><th>Email</th><th>Terdaftar</th><th>Peran</th></tr></thead>
+          <tbody id="admins-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 2. Daftar pengguna -->
+  <section class="panel" id="panel-users" role="tabpanel" aria-labelledby="tab-users" hidden>
+    <div class="card">
+      <h2>Daftar pengguna</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Nama</th><th>Email</th><th>Terdaftar</th><th>Peran</th></tr></thead>
+          <tbody id="users-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Produk terjual -->
+  <section class="panel" id="panel-sales" role="tabpanel" aria-labelledby="tab-sales" hidden>
+    <div class="card">
+      <h2>Produk yang terjual</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Produk</th><th class="num">Jumlah terjual</th><th class="num">Pendapatan</th></tr></thead>
+          <tbody id="sold-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Riwayat transaksi</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Tanggal</th><th>Pembeli</th><th>Produk</th><th class="num">Jumlah</th><th class="num">Total</th></tr></thead>
+          <tbody id="sales-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Dialog Edit Produk -->
+<<!-- Dialog Edit Produk -->
+<dialog id="edit-product" aria-labelledby="edit-title">
+  <h2 id="edit-title">Edit produk</h2>
+  <form id="edit-form" novalidate>
+    <div class="field">
+      <label for="e-category">Kategori</label>
+      <select id="e-category" required>
+        <!-- Akan diisi oleh JS -->
+      </select>
+    </div>
+    <div class="field">
+      <label for="e-name">Nama produk</label>
+      <input id="e-name" type="text" placeholder="Nama produk">
+    </div>
+    <!-- ... sisa field deskripsi, harga, stok biarkan sama ... -->
+    <div class="field">
+      <label for="e-desc">Deskripsi</label>
+      <input id="e-desc" type="text" placeholder="Keterangan singkat">
+    </div>
+    <div class="grid">
+      <div class="field">
+        <label for="e-price">Harga (Rp)</label>
+        <input id="e-price" type="number" min="0" step="100">
+      </div>
+      <div class="field">
+        <label for="e-stock">Stok</label>
+        <input id="e-stock" type="number" min="0" step="1">
+      </div>
+    </div>
+    <p class="err" id="e-err" role="alert"></p>
+    <div class="actions">
+      <button class="btn ghost" type="button" id="e-cancel">Batal</button>
+      <button class="btn" type="submit" id="e-submit">Simpan perubahan</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="homepage_admin.js"></script>
+</body>
+</html>

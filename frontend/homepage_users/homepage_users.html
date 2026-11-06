@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toko Online</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="..\style\homepage_users.css">
+</head>
+<body>
+<header class="top">
+  <h1>Toko Online</h1>
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <a href="#" id="btn-change-pw" style="color: var(--text); font-weight: 600; text-decoration: none;">Ubah Sandi</a>
+    <a href="..\login_register\login.html" class="logout">Keluar</a>
+  </div>
+</header>
+
+<main class="layout">
+    <section aria-labelledby="h-products">
+    <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+      <h2 id="h-products" style="margin: 0; flex: 1;">Produk</h2>
+      <input type="search" id="search-user" placeholder="Cari produk..." style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);">
+      <select id="filter-category" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+        <option value="">Semua Kategori</option>
+        <!-- Diisi oleh JS -->
+      </select>
+    </div>
+    
+    <div class="products" id="products"></div>
+    
+    <!-- Pagination User -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 24px;">
+      <button type="button" class="btn ghost" id="user-btn-prev" disabled style="height: 36px;">Sebelumnya</button>
+      <span id="user-page-info" style="font-size: 0.9rem;">Halaman 1</span>
+      <button type="button" class="btn ghost" id="user-btn-next" disabled style="height: 36px;">Selanjutnya</button>
+    </div>
+  </section>
+
+  <aside class="cart card" aria-labelledby="h-cart">
+    <h2 id="h-cart">Keranjang belanja</h2>
+    <div id="cart-items"></div>
+    <div class="total-row"><span>Total</span><strong id="cart-total">Rp0</strong></div>
+    <button class="btn" id="checkout-btn" type="button" disabled>Bayar sekarang</button>
+  </aside>
+</main>
+
+<dialog id="checkout" aria-labelledby="co-title">
+  <!-- Tahap 1: pembayaran -->
+  <div id="co-form-view">
+    <h2 id="co-title">Pembayaran</h2>
+    <ul class="summary" id="co-summary"></ul>
+    <div class="total-row"><span>Total bayar</span><strong id="co-total">Rp0</strong></div>
+    <form id="pay-form" novalidate>
+      <div class="field">
+        <label for="buyer">Nama pembeli</label>
+        <input id="buyer" type="text" autocomplete="name" placeholder="Nama Anda">
+      </div>
+      <div class="field">
+        <label for="method">Metode pembayaran</label>
+        <select id="method">
+          <option value="">Pilih metode</option>
+          <option>Transfer Bank</option>
+          <option>E-Wallet</option>
+          <option>Kartu Kredit/Debit</option>
+          <option>Bayar di Tempat (COD)</option>
+        </select>
+      </div>
+      <p class="err" id="pay-err" role="alert"></p>
+      <div class="actions">
+        <button class="btn ghost" type="button" id="co-cancel">Batal</button>
+        <button class="btn" type="submit" id="pay-btn">Bayar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Tahap 2: struk -->
+  <div id="receipt-view" hidden>
+    <div class="receipt">
+      <h2>Struk Pembelian</h2>
+      <p class="muted center">Pembayaran berhasil</p>
+      <dl class="meta">
+        <dt>No. transaksi</dt><dd id="r-no"></dd>
+        <dt>Tanggal</dt><dd id="r-date"></dd>
+        <dt>Pembeli</dt><dd id="r-buyer"></dd>
+        <dt>Pembayaran</dt><dd id="r-method"></dd>
+      </dl>
+      <table>
+        <thead><tr><th>Produk</th><th class="num">Qty</th><th class="num">Subtotal</th></tr></thead>
+        <tbody id="r-items"></tbody>
+      </table>
+      <div class="total-row"><span>Total</span><strong id="r-total"></strong></div>
+      <p class="muted center">Terima kasih telah berbelanja!</p>
+    </div>
+    <div class="actions no-print">
+      <button class="btn ghost" type="button" id="r-print">Cetak struk</button>
+      <button class="btn" type="button" id="r-close">Selesai</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Dialog Ubah Kata Sandi -->
+<dialog id="change-pw-dialog" aria-labelledby="pw-title">
+  <h2 id="pw-title">Ubah Kata Sandi</h2>
+  <form id="change-pw-form" novalidate>
+    <div class="field">
+      <label for="old-pw">Kata sandi lama</label>
+      <input id="old-pw" type="password" placeholder="Masukkan kata sandi saat ini">
+    </div>
+    <div class="field">
+      <label for="new-pw">Kata sandi baru</label>
+      <input id="new-pw" type="password" placeholder="Minimal 8 karakter">
+    </div>
+    <p class="err" id="pw-err" role="alert"></p>
+    <div class="actions">
+      <button class="btn ghost" type="button" id="pw-cancel">Batal</button>
+      <button class="btn" type="submit" id="pw-submit">Simpan</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="homepage_users.js"></script>
+</body>
+</html>

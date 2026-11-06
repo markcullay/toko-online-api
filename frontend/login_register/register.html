@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daftar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="..\style\style.css">
+</head>
+<body>
+<main class="card">
+  <h1>Buat akun baru</h1>
+  <p class="sub">Isi data berikut untuk mulai menggunakan akun Anda.</p>
+
+  <form id="register" novalidate>
+    <div class="field">
+      <label for="name">Nama lengkap</label>
+      <input id="name" type="text" autocomplete="name" placeholder="Nama Anda" aria-describedby="name-err">
+      <p class="err" id="name-err" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" placeholder="nama@contoh.com" aria-describedby="email-err">
+      <p class="err" id="email-err" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="password">Kata sandi</label>
+      <div class="input-wrap pw">
+        <input id="password" type="password" autocomplete="new-password" placeholder="Minimal 8 karakter" aria-describedby="pw-err">
+        <button type="button" class="toggle" id="toggle" aria-label="Tampilkan kata sandi">Lihat</button>
+      </div>
+      <p class="err" id="pw-err" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label for="confirm">Ulangi kata sandi</label>
+      <input id="confirm" type="password" autocomplete="new-password" placeholder="Ketik ulang kata sandi" aria-describedby="confirm-err">
+      <p class="err" id="confirm-err" role="alert"></p>
+    </div>
+
+    <div class="field">
+      <label class="check"><input type="checkbox" id="terms"> Saya setuju dengan syarat &amp; ketentuan</label>
+      <p class="err" id="terms-err" role="alert"></p>
+    </div>
+
+    <button class="submit" type="submit" id="submit">Daftar</button>
+    <p class="status" id="status" aria-live="polite"></p>
+  </form>
+
+  <p class="foot">Sudah punya akun? <a href="login.html">Masuk</a></p>
+</main>
+
+<script src="register.js"></script>
+</body>
+</html>
