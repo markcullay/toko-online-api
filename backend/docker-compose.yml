@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Layanan Database PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: toko_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432" # Agar bisa diakses dari luar (misal via pgAdmin)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Layanan Aplikasi Go
+  app:
+    build: .
+    container_name: toko_api
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy # Tunggu database siap sebelum menjalankan app
+    env_file:
+      - .env # Gunakan variabel dari file .env
+
+# Volume untuk menyimpan data database agar tidak hilang saat container mati
+volumes:
+  postgres_data:
