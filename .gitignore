@@ -2,5 +2,3 @@ module toko-api
 .env
 doc.md
 penambahan.md
-peta_endpoint.md
-standar_HTTP_statusCode.md
